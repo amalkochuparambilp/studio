@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { generateProjectIdeas, type GenerateProjectIdeasInput, type ProjectIdea } from "@/ai/flows/generate-project-ideas-flow";
-import { Loader2, LightbulbIcon, BrainIcon, CpuIcon, ShapesIcon, TrendingUpIcon, FileTextIcon, LayersIcon, ZapIcon, AlertTriangleIcon } from "lucide-react";
+import { Loader2, LightbulbIcon, BrainIcon, CpuIcon, ShapesIcon, TrendingUpIcon, FileTextIcon, LayersIcon, ZapIcon, AlertTriangleIcon, ClipboardListIcon, AlignLeftIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const projectTypes = ["Web Application", "Mobile App", "AI/ML Project", "IoT Project", "Desktop Application", "Game Development", "Utility Tool", "Research Based"];
@@ -195,7 +195,26 @@ export default function ProjectIdeasPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-5 space-y-4">
-                <p className="font-body text-base text-foreground/90">{idea.description}</p>
+                <div>
+                  <h4 className="text-md font-semibold flex items-center mb-2 text-muted-foreground">
+                    <AlignLeftIcon className="mr-2 h-5 w-5" /> Description:
+                  </h4>
+                  <p className="font-body text-base text-foreground/90">{idea.description}</p>
+                </div>
+
+                <div>
+                  <h4 className="text-md font-semibold flex items-center mb-2 text-muted-foreground">
+                    <FileTextIcon className="mr-2 h-5 w-5" /> Abstract:
+                  </h4>
+                  <p className="font-body text-base text-foreground/90">{idea.abstract}</p>
+                </div>
+                
+                <div>
+                  <h4 className="text-md font-semibold flex items-center mb-2 text-muted-foreground">
+                    <ClipboardListIcon className="mr-2 h-5 w-5" /> Synopsis:
+                  </h4>
+                  <p className="font-body text-base text-foreground/90">{idea.synopsis}</p>
+                </div>
                 
                 <div>
                   <h4 className="text-md font-semibold flex items-center mb-2 text-muted-foreground">
