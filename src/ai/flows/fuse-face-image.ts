@@ -38,39 +38,30 @@ export async function fuseFaceImage(input: FuseFaceImageInput): Promise<FuseFace
   return fuseFaceImageFlow(input);
 }
 
-const fuseFaceImagePrompt = ai.definePrompt({
-  name: 'fuseFaceImagePrompt',
-  input: {schema: FuseFaceImageInputSchema},
-  output: {schema: FuseFaceImageOutputSchema},
-  prompt: [
-    {media: {url: '{{{referenceImage}}}'}},
-    {text: 'Reference Image. Take the face from the Face Image and put the face into this image.'},
-    {media: {url: '{{{faceImage}}}'}},
-    {text: 'Face Image. Put the face into the Reference Image.'},
-    {
-      text: 'Generate the fused image.  The generated image MUST contain the face from Face Image, and it MUST be placed into the Reference Image. The output must be a data URI that must include a MIME type and use Base64 encoding. Expected format: \'data:<mimetype>;base64,<encoded_data>\'.',
-    },
-  ],
-  config: {
-    responseModalities: ['TEXT', 'IMAGE'],
-  },
-});
-
 const fuseFaceImageFlow = ai.defineFlow(
   {
     name: 'fuseFaceImageFlow',
     inputSchema: FuseFaceImageInputSchema,
     outputSchema: FuseFaceImageOutputSchema,
   },
-  async input => {
+  async (input: FuseFaceImageInput): Promise<FuseFaceImageOutput> => {
     const {media} = await ai.generate({
       model: 'googleai/gemini-2.0-flash-exp',
-      prompt: fuseFaceImagePrompt,
+      prompt: [
+        {media: {url: input.referenceImage}},
+        {text: 'This is the reference image. The final image should use this as the scene or background.'},
+        {media: {url: input.faceImage}},
+        {text: 'This is the face image. Take the primary face from this image and seamlessly integrate it into the reference image. Ensure the style and lighting match the reference image.'},
+        {text: 'Generate the fused image.'},
+      ],
       config: {
         responseModalities: ['TEXT', 'IMAGE'],
       },
     });
 
-    return {fusedImage: media.url!};
+    if (!media?.url) {
+      throw new Error('Image generation failed: No image URL was returned by the model.');
+    }
+    return {fusedImage: media.url};
   }
 );

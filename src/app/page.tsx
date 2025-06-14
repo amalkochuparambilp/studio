@@ -54,10 +54,7 @@ export default function FaceWeavePage() {
       };
       const result = await fuseFaceImage(input);
       setFusedImage(result.fusedImage);
-      toast({
-        title: "Fusion Complete!",
-        description: "Your new image has been created.",
-      });
+      // Removed success toast to align with guidelines (toasts for errors only)
     } catch (error) {
       console.error("Error fusing images:", error);
       const errorMessage = error instanceof Error ? error.message : "An unknown error occurred during image fusion.";
