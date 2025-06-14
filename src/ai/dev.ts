@@ -1,4 +1,4 @@
 import { config } from 'dotenv';
 config();
 
-import '@/ai/flows/fuse-face-image.ts';
+import '@/ai/flows/generate-project-ideas-flow.ts';
