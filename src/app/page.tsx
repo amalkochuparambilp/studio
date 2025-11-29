@@ -260,7 +260,7 @@ export default function ProjectIdeasPage() {
 
       <footer className="mt-12 mb-6 text-center">
         <p className="text-sm font-body text-muted-foreground">
-          Powered by GenAI & Next.js &bull; AKP DEVZ &copy; {isClient ? new Date().getFullYear() : ''}
+          Handcrafted with caffeine &bull; AKP DEVZ &copy; {isClient ? new Date().getFullYear() : ''}
           <br />
           Credit: Amal K P, BCA student @ JNIAS Idukki
         </p>
